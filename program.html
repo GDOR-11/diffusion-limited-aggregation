@@ -26,7 +26,7 @@
 				}
 				adicionar(bola, contagem = 0) {
 					this.bolas.push(bola);
-					if(contagem++ < 3) {
+					if(contagem++ < 4) {
 						if(bola.x > this.x - bola.r && bola.x < this.x + this.largura / 2 + bola.r) {
 							if(bola.y > this.y - bola.r && bola.y < this.y + this.altura / 2 + bola.r) {
 								if(!this.hasOwnProperty('cima_esquerda')) {
@@ -165,7 +165,7 @@
 			quadtree.adicionar(DLA[0]);
 			function renderizar() {
 				var agora = Date.now();
-				while(Date.now() - agora < 100) {
+				while(Date.now() - agora < 20) { // 50 fps
 					if(random_walker.atualizar(DLA)) {
 						cor += 0.02;
 						diffx = random_walker.x - largura / 2;
