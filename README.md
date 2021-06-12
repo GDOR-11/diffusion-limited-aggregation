@@ -1,4 +1,6 @@
 # diffusion-limited-aggregation
+simulation <a href = 'https://gdor-11.github.io/diffusion-limited-aggregation/program.html'>here</a>
+<br><br>
 A diffusion limited aggregation algorithm using what i like to call randomized ray marching with quadtrees
 <br><br>
 ok let's see what each term on this sentence means
