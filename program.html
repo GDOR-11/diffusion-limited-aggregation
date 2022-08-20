@@ -115,7 +115,7 @@
 				}
 				atualizar(particulas) {
 					var min_dist = quadtree.menor_distancia(this);
-					if(min_dist <= raio * 2 + 1e-5) { // the error is here, i'll fix it when i get home lol
+					if(min_dist <= raio + 1e-5) { // the error is here, i'll fix it when i get home lol
 						return true;
 					}
 					this.cor = cor;
@@ -160,6 +160,7 @@
 			var raio = 0.4;
 			var max_dist = raio;
 			var DLA = [new Particula(largura / 2, altura / 2)];
+			DLA[0].desenhar();
 			var random_walker = new Particula();
 			var quadtree = new QuadTree();
 			quadtree.adicionar(DLA[0]);
