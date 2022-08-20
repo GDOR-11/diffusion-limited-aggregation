@@ -115,7 +115,7 @@
 				}
 				atualizar(particulas) {
 					var min_dist = quadtree.menor_distancia(this);
-					if(min_dist <= raio * 2 + 1e-5) {
+					if(min_dist <= raio * 2 + 1e-5) { // the error is here, i'll fix it when i get home lol
 						return true;
 					}
 					this.cor = cor;
