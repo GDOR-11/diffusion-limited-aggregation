@@ -131,7 +131,7 @@
 					pincel.strokeStyle = 'hsl(' + this.cor + ', 100%, 50%)';
 					pincel.lineJoin = 'round';
 					pincel.lineWidth = raio * 2;
-					pincel.strokeRect(this.x, this.y, 0.3, 0.3);
+					pincel.strokeRect(this.x, this.y, 0.01, 0.01);
 				}
 			}
 			function resize() {
@@ -157,7 +157,7 @@
 			pincel.clearRect(0, 0, largura, altura);
 			window.onresize = resize;
 			var cor = 0;
-			var raio = 0.4;
+			var raio = 1;
 			var max_dist = raio;
 			var DLA = [new Particula(largura / 2, altura / 2)];
 			DLA[0].desenhar();
