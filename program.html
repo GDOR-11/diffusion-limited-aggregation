@@ -114,14 +114,14 @@
 					this.cor = cor;
 				}
 				atualizar(particulas) {
-					var min_dist = quadtree.menor_distancia(this);
-					if(min_dist <= raio * 2 + 1e-5) { // the error is here, i'll fix it when i get home lol
+					var min_dist = quadtree.menor_distancia(this) - this.r;
+					if(min_dist <= 1e-5) { // the error is here, i'll fix it when i get home lol
 						return true;
 					}
 					this.cor = cor;
 					var a = Math.random() * 2 * Math.PI;
-					this.x += (min_dist - raio * 2) * Math.cos(a);
-					this.y += (min_dist - raio * 2) * Math.sin(a);
+					this.x += min_dist * Math.cos(a);
+					this.y += min_dist * Math.sin(a);
 					return false;
 				}
 				longe_demais() {
