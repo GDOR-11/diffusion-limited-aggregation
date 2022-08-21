@@ -26,7 +26,7 @@
 				}
 				adicionar(bola, contagem = 0) {
 					this.bolas.push(bola);
-					if(contagem++ < 4) {
+					if(contagem++ < 5) {
 						if(bola.x > this.x - bola.r && bola.x < this.x + this.largura / 2 + bola.r) {
 							if(bola.y > this.y - bola.r && bola.y < this.y + this.altura / 2 + bola.r) {
 								if(!this.hasOwnProperty('cima_esquerda')) {
@@ -104,6 +104,16 @@
 					}
 					return menor_distancia;
 				}
+				desenhar() { // just for debugging/testing purposes
+					pincel.strokeStyle = 'rgba(255,255,255,0.5)';
+					pincel.lineJoin = 'round';
+					pincel.lineWidth = 1;
+					pincel.strokeRect(this.x, this.y, this.largura, this.altura);
+					this.cima_direita?.desenhar();
+					this.cima_esquerda?.desenhar();
+					this.baixo_direita?.desenhar();
+					this.baixo_esquerda?.desenhar();
+				}
 			}
 			class Particula {
 				constructor(x, y) {
@@ -115,7 +125,7 @@
 				}
 				atualizar(particulas) {
 					var min_dist = quadtree.menor_distancia(this) - this.r;
-					if(min_dist <= 1e-5) { // the error is here, i'll fix it when i get home lol
+					if(min_dist <= 1e-5) {
 						return true;
 					}
 					this.cor = cor;
@@ -124,8 +134,8 @@
 					this.y += min_dist * Math.sin(a);
 					return false;
 				}
-				longe_demais() {
-					return this.x < 0 || this.x > largura || this.y < 0 || this.y > altura;
+				longe_demais(quadtree) {
+					return this.x < quadtree.x || this.x > quadtree.x + quadtree.largura || this.y < quadtree.y || this.y > quadtree.y + quadtree.altura;
 				}
 				desenhar() {
 					pincel.strokeStyle = 'hsl(' + this.cor + ', 100%, 50%)';
@@ -156,17 +166,18 @@
 			canvas.height = altura;
 			pincel.clearRect(0, 0, largura, altura);
 			window.onresize = resize;
+			var espaco_extra = 1000;
 			var cor = 0;
 			var raio = 1;
 			var max_dist = raio;
 			var DLA = [new Particula(largura / 2, altura / 2)];
 			DLA[0].desenhar();
 			var random_walker = new Particula();
-			var quadtree = new QuadTree();
+			var quadtree = new QuadTree(-espaco_extra, -espaco_extra, largura + 2 * espaco_extra, altura + 2 * espaco_extra);
 			quadtree.adicionar(DLA[0]);
 			function renderizar() {
 				var agora = Date.now();
-				while(Date.now() - agora < 20) { // 50 fps
+				while(Date.now() - agora < 1000 / 60) { // 60fps
 					if(random_walker.atualizar(DLA)) {
 						cor += 0.02;
 						diffx = random_walker.x - largura / 2;
@@ -179,7 +190,7 @@
 						quadtree.adicionar(random_walker);
 						random_walker.desenhar();
 						random_walker = new Particula();
-					} else if(random_walker.longe_demais()) {
+					} else if(random_walker.longe_demais(quadtree)) {
 						random_walker = new Particula();
 					}
 				}
